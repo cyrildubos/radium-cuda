@@ -26,6 +26,8 @@ public:
   // __device__ static Vector random_unit();
 
   __host__ __device__ bool near_zero() const;
+
+  __host__ __device__ std::uint32_t to_color() const;
 };
 
 __host__ __device__ inline Vector operator+(const Vector& u, const Vector& v) {

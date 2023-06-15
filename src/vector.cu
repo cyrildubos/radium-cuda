@@ -42,3 +42,11 @@ __host__ __device__ bool Radium::Vector::near_zero() const {
 
   return std::fabs(x) < value && std::fabs(y) < value && std::fabs(z) < value;
 }
+
+__host__ __device__ std::uint32_t Radium::Vector::to_color() const {
+  const auto r = (std::uint32_t)(255 * x);
+  const auto g = (std::uint32_t)(255 * y);
+  const auto b = (std::uint32_t)(255 * z);
+
+  return (r << 0) + (g << 8) + (b << 16);
+}

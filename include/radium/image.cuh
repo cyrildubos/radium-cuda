@@ -5,10 +5,12 @@
 #include <iostream>
 
 #include "camera.cuh"
+#include "color.cuh"
+#include "vector.cuh"
 
 namespace Radium {
 class Image {
-  float* data;
+  Radium::Color* data;
 
 public:
   const std::size_t width;

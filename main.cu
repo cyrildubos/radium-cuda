@@ -7,8 +7,8 @@
 int main() {
   std::cout << "Hello, World!" << std::endl;
 
-  const auto width = 1920;
-  const auto height = 1080;
+  const auto width = 16;
+  const auto height = 9;
 
   const auto aspect_ratio = width / height;
 
