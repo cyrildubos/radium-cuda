@@ -16,7 +16,7 @@ public:
 
   __host__ Camera(const double);
 
-  __device__ Ray get_ray(double, double) const;
+  __device__ Ray get_ray(const double, const double) const;
 };
 } // namespace Radium
 

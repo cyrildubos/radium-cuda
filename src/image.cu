@@ -9,9 +9,9 @@ __host__ Radium::Image::Image(const std::size_t width, const std::size_t height,
 __host__ Radium::Image::~Image() { cudaFree(data); }
 
 __device__ Radium::Vector compute_color(const Radium::Ray& ray) {
-  auto direction = unit(ray.direction);
+  const auto direction = unit(ray.direction);
 
-  auto t = 0.5 * (direction.y + 1.0);
+  const auto t = 0.5 * (direction.y + 1.0);
 
   return (1.0 - t) * Radium::Vector(1.0, 1.0, 1.0) +
          t * Radium::Vector(0.2, 0.5, 1.0);
@@ -19,22 +19,20 @@ __device__ Radium::Vector compute_color(const Radium::Ray& ray) {
 
 __global__ void compute(Radium::Color* data, const std::size_t width,
                         const std::size_t height, const Radium::Camera camera) {
-  auto i = blockIdx.x * blockDim.x + threadIdx.x;
-  auto j = blockIdx.y * blockDim.y + threadIdx.y;
+  const auto i = blockIdx.x * blockDim.x + threadIdx.x;
+  const auto j = blockIdx.y * blockDim.y + threadIdx.y;
 
   if (i >= width || j >= height)
     return;
 
-  auto u = double(i) / double(width);
-  auto v = double(j) / double(height);
+  const auto u = double(i) / double(width);
+  const auto v = double(j) / double(height);
 
-  auto ray = camera.get_ray(u, v);
+  const auto ray = camera.get_ray(u, v);
 
-  auto color = compute_color(ray);
+  const auto color = compute_color(ray);
 
-  auto index = i + j * width;
-
-  data[index] = Radium::Color(color);
+  data[i + j * width] = Radium::Color(color);
 }
 
 __host__ void Radium::Image::render() {
@@ -56,15 +54,8 @@ __host__ void Radium::Image::save(const std::string path) {
   file_stream << "P3\n" << width << ' ' << height << "\n255\n";
 
   for (auto j = 0; j < height; j++)
-    for (auto i = 0; i < width; i++) {
-      auto index = i + j * width;
-
-      // auto r = 0xFF & (data[index] >> 0);
-      // auto g = 0xFF & (data[index] >> 8);
-      // auto b = 0xFF & (data[index] >> 16);
-
-      file_stream << data[index] << '\n';
-    }
+    for (auto i = 0; i < width; i++)
+      file_stream << data[i + j * width] << '\n';
 
   file_stream << '\n';
 

@@ -1,9 +1,10 @@
 #include <radium/vector.cuh>
 
-__host__ __device__ Radium::Vector::Vector() : x{0.0}, y{0.0}, z{0.0} {}
+__host__ __device__ Radium::Vector::Vector() : x(0.0), y(0.0), z(0.0) {}
 
-__host__ __device__ Radium::Vector::Vector(double x, double y, double z)
-    : x{x}, y{y}, z{z} {}
+__host__ __device__ Radium::Vector::Vector(const double x, const double y,
+                                           const double z)
+    : x(x), y(y), z(z) {}
 
 __host__ __device__ double Radium::Vector::length() const {
   return std::sqrt(length_squared());

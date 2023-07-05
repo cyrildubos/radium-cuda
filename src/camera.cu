@@ -16,7 +16,8 @@ __host__ Radium::Camera::Camera(const double aspect_ratio) {
            + vertical / 2.0;                         //
 }
 
-__device__ Radium::Ray Radium::Camera::get_ray(double u, double v) const {
+__device__ Radium::Ray Radium::Camera::get_ray(const double u,
+                                               const double v) const {
   return Ray(position,            //
              origin - position    //
                  + u * horizontal //

@@ -14,7 +14,7 @@ public:
   double z;
 
   __host__ __device__ Vector();
-  __host__ __device__ Vector(double, double, double);
+  __host__ __device__ Vector(const double, const double, const double);
 
   __host__ __device__ double length() const;
   __host__ __device__ double length_squared() const;

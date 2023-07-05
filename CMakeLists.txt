@@ -4,6 +4,9 @@ project(radium-cuda VERSION 0.1.0 LANGUAGES CUDA)
 
 
 add_library(Radium 
+  src/hittables/scene.cu
+  src/hittables/sphere.cu
+
   src/camera.cu
   src/color.cu
   src/image.cu
