@@ -1,25 +1,31 @@
 #include <radium/hittables/sphere.cuh>
 
-__host__ Radium::Hittables::Sphere::Sphere(const Vector& center, double radius)
-    : center(center), radius(radius) {}
+__host__ Radium::Hittables::Sphere::Sphere(const Vector& center,
+                                           const double radius,
+                                           Material* material)
+    : center(center), radius(radius), material(material) {}
 
-__device__ bool Radium::Hittables::Sphere::hit(const Ray& ray, double t_min,
-                                               double t_max, Hit& hit) const {
-  auto direction = ray.origin - center;
+__device__ bool Radium::Hittables::Sphere::hit(const Ray& ray,
+                                               const double t_min,
+                                               const double t_max,
+                                               Hit& hit) const {
+  const auto direction = ray.origin - center;
 
-  auto a = ray.direction.length_squared();
-  auto half_b = dot(direction, ray.direction);
-  auto c = direction.length_squared() - radius * radius;
+  const auto a = ray.direction.length_squared();
+  const auto half_b = Vector::dot(direction, ray.direction);
+  const auto c = direction.length_squared() - radius * radius;
 
-  auto discriminant = half_b * half_b - a * c;
+  const auto d = half_b * half_b - a * c;
 
-  if (discriminant < 0.0)
+  if (d < 0.0)
     return false;
 
-  auto root = (-half_b - std::sqrt(discriminant)) / a;
+  const auto sqrt_d = std::sqrt(d);
+
+  auto root = (-half_b - sqrt_d) / a;
 
   if (root < t_min || t_max < root) {
-    root = (-half_b + std::sqrt(discriminant)) / a;
+    root = (-half_b + sqrt_d) / a;
 
     if (root < t_min || t_max < root)
       return false;
@@ -28,6 +34,7 @@ __device__ bool Radium::Hittables::Sphere::hit(const Ray& ray, double t_min,
   hit.t = root;
   hit.position = ray.at(hit.t);
   hit.normal = (hit.position - center) / radius;
+  hit.material = material;
 
   return true;
 }

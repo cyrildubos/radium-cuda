@@ -3,21 +3,29 @@ cmake_minimum_required(VERSION 3.0.0)
 project(radium-cuda VERSION 0.1.0 LANGUAGES CUDA)
 
 
-add_library(Radium 
+# library
+
+add_library(radium 
   src/hittables/scene.cu
   src/hittables/sphere.cu
 
+  src/materials/lambertian.cu
+  
   src/camera.cu
-  src/color.cu
   src/image.cu
+  src/pixel.cu
   src/ray.cu
   src/vector.cu
 )
 
-target_include_directories(Radium PUBLIC include)
+target_include_directories(radium PUBLIC include)
 
-set_property(TARGET Radium PROPERTY CUDA_SEPARABLE_COMPILATION ON)
+# set_property(TARGET radium PROPERTY CUDA_SEPARABLE_COMPILATION ON)
 
-add_executable(main main.cu)
+# executable
 
-target_link_libraries(main PUBLIC Radium)
+add_executable(spheres 
+  examples/spheres.cu
+)
+
+target_link_libraries(spheres PUBLIC radium)

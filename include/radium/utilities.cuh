@@ -1,17 +1,20 @@
-#ifndef UTILITIES_CUH
-#define UTILITIES_CUH
+#ifndef RADIUM_UTILITIES_CUH
+#define RADIUM_UTILITIES_CUH
 
 #include <cstdlib>
 
 namespace Radium {
-// __device__ inline double random_double() { return rand() / (RAND_MAX + 1.0);
-// }
+// TODO
+__host__ __device__ inline double random_double() {
+  // return rand() / (RAND_MAX + 1.0);
+  return 0.5;
+}
 
-// __device__ inline double random_double(double min, double max) {
-//   return min + (max - min) * random_double();
-// }
+__host__ __device__ inline double random_double(double min, double max) {
+  return min + (max - min) * random_double();
+}
 
-// __device__ inline double clamp(double x, double min, double max) {
+//  inline double clamp(double x, double min, double max) {
 //   if (x < min)
 //     return min;
 

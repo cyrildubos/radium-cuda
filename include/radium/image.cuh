@@ -4,13 +4,18 @@
 #include <fstream>
 #include <iostream>
 
+#include "hittables/scene.cuh"
+
 #include "camera.cuh"
-#include "color.cuh"
+#include "hit.cuh"
+#include "material.cuh"
+#include "pixel.cuh"
+#include "utilities.cuh"
 #include "vector.cuh"
 
 namespace Radium {
 class Image {
-  Radium::Color* data;
+  Radium::Pixel* pixels;
 
 public:
   const std::size_t width;
@@ -18,12 +23,15 @@ public:
 
   const Camera& camera;
 
-  __host__ Image(const std::size_t, const std::size_t, const Camera&);
-  __host__ ~Image();
+  const Hittables::Scene& scene;
 
-  __host__ void render();
+  Image(const std::size_t, const std::size_t, const Camera&,
+        const Hittables::Scene&);
+  ~Image();
 
-  __host__ void save(const std::string);
+  void render();
+
+  void save(const std::string) const;
 };
 } // namespace Radium
 

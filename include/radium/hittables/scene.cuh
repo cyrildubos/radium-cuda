@@ -11,15 +11,20 @@
 namespace Radium::Hittables {
 class Scene : public Hittable {
 public:
-  std::vector<std::shared_ptr<Hittable>> hittables;
+  const std::size_t max_size;
 
-  __host__ Scene();
+  Hittable** hittables;
 
-  __host__ void add(std::shared_ptr<Hittable>);
+  std::size_t size;
+
+  __host__ Scene(const std::size_t);
+
+  __host__ void add(Hittable*);
 
   __host__ void clear();
 
-  __device__ virtual bool hit(const Ray&, double, double, Hit&) const override;
+  __device__ virtual bool hit(const Ray&, const double, const double,
+                              Hit&) const override;
 };
 } // namespace Radium::Hittables
 

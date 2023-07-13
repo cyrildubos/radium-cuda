@@ -7,7 +7,8 @@
 namespace Radium {
 class Hittable {
 public:
-  __device__ virtual bool hit(const Ray&, double, double, Hit&) const = 0;
+  __device__ virtual bool hit(const Ray&, const double, const double,
+                              Hit&) const = 0;
 };
 } // namespace Radium
 

@@ -1,9 +1,10 @@
 #include <radium/ray.cuh>
 
-__host__ __device__ Radium::Ray::Ray(const Vector& origin,
-                                     const Vector& direction)
+__device__ Radium::Ray::Ray() {}
+
+__device__ Radium::Ray::Ray(const Vector& origin, const Vector& direction)
     : origin(origin), direction(direction) {}
 
-__host__ __device__ Radium::Vector Radium::Ray::at(double t) const {
-  return origin + direction * t;
+__device__ Radium::Vector Radium::Ray::at(const double t) const {
+  return origin + t * direction;
 }

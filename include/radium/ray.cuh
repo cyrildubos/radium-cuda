@@ -9,9 +9,10 @@ public:
   Vector origin;
   Vector direction;
 
-  __host__ __device__ Ray(const Vector&, const Vector&);
+  __device__ Ray();
+  __device__ Ray(const Vector&, const Vector&);
 
-  __host__ __device__ Vector at(double) const;
+  __device__ Vector at(const double) const;
 };
 } // namespace Radium
 

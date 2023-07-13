@@ -5,6 +5,7 @@
 
 #include "../hit.cuh"
 #include "../hittable.cuh"
+#include "../material.cuh"
 #include "../ray.cuh"
 #include "../vector.cuh"
 
@@ -13,10 +14,12 @@ class Sphere : public Hittable {
 public:
   const Vector center;
   const double radius;
+  Material* material;
 
-  __host__ Sphere(const Vector&, double);
+  __host__ Sphere(const Vector&, const double, Material*);
 
-  __device__ virtual bool hit(const Ray&, double, double, Hit&) const override;
+  __device__ virtual bool hit(const Ray&, const double, const double,
+                              Hit&) const override;
 };
 } // namespace Radium::Hittables
 

@@ -1,15 +1,18 @@
 #ifndef RADIUM_HIT_CUH
 #define RADIUM_HIT_CUH
 
-// #include <memory>
+#include <memory>
 
 #include "vector.cuh"
 
 namespace Radium {
+class Material;
+
 struct Hit {
+  double t;
   Vector position;
   Vector normal;
-  double t;
+  Material* material;
 
   // TODO: front face
 };
